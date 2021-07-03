@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-md-10 offset-md-3">
+        <div class = "col-lg-8">
+            <h3> Articles </h3>
+            <hr>
+        </div>
+    </div> 
+</div> 
+
+
+<div class="row">
+    <div class="col-md-10 offset-md-3">
+        <div class = "col-lg-8">
+            <form>
+                {% csrf_token %}
+                <input type = "text" name ="keyword" class = "input sm" maxlength="64" placeholder="Go...">
+                <button type = "submit" class="btn btn-danger"> Search </button>
+                <br>
+            </form>
+        </div>
+    </div> 
+</div> 
+
+
+
+
+
+
+{% if articles %}
+
+{% for article in articles  %}
+ <!-- Page content-->
+        <div class="container mt-5">
+            <div class="row">
+            <div class="col-md-10 offset-md-3">
+                <div class="col-lg-8">
+                    <!-- Post content-->
+                    <article>
+                        <!-- Post header-->
+                        <header class="mb-4">
+                            <!-- Post title-->
+                            <a href = "{% url 'article:detail' article.id %} "> <h3 class="fw-bolder mb-1"> {{article.title}} </h3> </a>
+                            <div class="text-muted fst-italic mb-2">by {{article.author.username}} </div>
+                            <hr>
+                            <p>{{article.created_date}} </p>
+                            <hr>
+                        </header>
+
+                        {% if article.article_image %}
+                        <!-- Preview image figure -->
+                             <a href = "{% url 'article:detail' article.id %} "> <figure class="mb-4"><img class="img-fluid rounded" src="{{article.article_image.url}}" alt="..." /></figure> </a>
+                        {% endif %}
+                         <!--Post content--> 
+                        <p class= "lead">
+                        {{article.content | safe |truncatewords:30}}
+                        </p>
+                        <a style = "float : right" href = "{% url 'article:detail' article.id %} " class = "btn btn-danger"> Read More </a>
+                        <br><br><hr>
+ 
+                    </article>
+                </div>   
+                </div> 
+            </div>
+        </div>
+{% endfor %}
+{% else %}
+
+
+<div class="row">
+    <div class="col-md-10 offset-md-3">
+        <div class = "col-lg-8">
+            <div class= "alert alert-danger"> 
+                No articles found!
+            </div>  
+        </div>
+    </div> 
+</div> 
+
+
+{% endif %}
+
+{% endblock body %}

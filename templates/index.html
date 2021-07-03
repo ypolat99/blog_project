@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+
+    <div class= "jumbotron text-center"> 
+    <h3> Welcome to My Blog</h3>
+    <p> 
+        This is where I share my thoughts and experiences about Computer Science, Economics and (sometimes) politics.
+        I am by no means a professional, but I am aspiring to be one. Here I plan to write about the things I find interesting such as
+        the books I read, lessons I learn, my thoughts on recent economic and financial news, science, new technologies and startups. 
+        
+        I also plan on writing about my investment experiences which I started around February 2021.
+
+    </p>
+    </div>
+    
+    {% if request.user.is_authenticated %}
+    Welcome,  {{request.user.username}}
+    
+    {% else %}
+    Not logged in!
+    {% endif %}
+
+{% endblock body %}
